@@ -24,7 +24,9 @@ from core import *
 
 ciphertext = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
 
-ngram_score = NgramScore('core/english_quadgrams.txt')
+ngram_collection = load_ngram_collection('core/eng_wnp.pickle')
+ngrams = ngram_collection[3]
+
 
 
 ciphertext = hex_string_to_array(ciphertext)
@@ -32,18 +34,29 @@ ciphertext = hex_string_to_array(ciphertext)
 cleartext = ''
 
 max_score = None
+key = 0
 
 for i in xrange(256):
+    #if i != 0x16:
+    #    continue
+    
     potential_cleartext = str(bytearray((ciphertext ^ i)))
 
-    score = ngram_score.score(potential_cleartext)
+    score = eng_score(potential_cleartext, ngrams)
 
+    #print potential_cleartext, score
+    
+    if score == 0:
+        continue
     # print potential_cleartext, score
-    if not max_score:
+    if max_score == None:
         max_score = score
     elif score > max_score:
         max_score = score
         cleartext = potential_cleartext
+        key = i
 
 
-print cleartext, max_score
+print 'Cleartext:', cleartext
+print 'Key:', hex(key)
+print 'Fitness:', max_score

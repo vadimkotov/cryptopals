@@ -14,25 +14,27 @@ from core import *
 
 
 
-ngram_score = NgramScore('core/model.pickle')
+
+ngram_collection = load_ngram_collection('core/eng_wnp.pickle')
+ngrams = ngram_collection[3]
 
 cleartext = ''
 max_score = None
 
-# scores = []
 
 
+cnt = 0
 for line in file('files/4.txt'):
+    cnt += 1
+    
     ciphertext = hex_string_to_array(line.strip())
 
-    
-    
+        
     for i in xrange(256):
         potential_cleartext = str(bytearray((ciphertext ^ i)))
 
-        score = ngram_score.score(potential_cleartext)
+        score = eng_score(potential_cleartext, ngrams)
 
-        
         if score == 0:
             continue
         #print score
@@ -42,11 +44,8 @@ for line in file('files/4.txt'):
             max_score = score
             cleartext = potential_cleartext
 
-    #scores.append((max_score, cleartext))
- 
 
-
-#scores = sorted(scores, key=lambda x: x[0])
     
-
-print cleartext, max_score
+print 'Cleartext:', cleartext
+print 'Fitness:', max_score
+print 'Line #:', cnt
