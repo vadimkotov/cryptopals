@@ -16,6 +16,14 @@ def load_ngram_collection(filename):
     return pickle.load(open(filename, 'rb'))
 
 
+def repeating_key_xor(data, key):
+
+    xored = []
+    
+    for i in xrange(len(data)):
+        xored.append(data[i] ^ key[i%len(key)]) 
+    return xored
+
 def eng_score(text, ngrams):
     
     if not text:
