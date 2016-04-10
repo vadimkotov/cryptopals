@@ -30,7 +30,7 @@ for i in xrange(len(lines)):
         print
         print lines[i]
         print
-        print 'Blocks with resumably same cleartext:'
+        print 'Blocks with presumably the same cleartext:'
         print
         x, y = indices
         print '(Offset %d) %s' % (x, lines[i][x*2:x*2+32])
