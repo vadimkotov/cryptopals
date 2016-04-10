@@ -1,5 +1,5 @@
 """
-There's a file here. It's been base64'd after being encrypted with repeating-key XOR.
+There's a file (http://cryptopals.com/static/challenge-data/6.txt) here. It's been base64'd after being encrypted with repeating-key XOR.
 
 Decrypt it.
 

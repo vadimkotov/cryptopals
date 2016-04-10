@@ -40,17 +40,6 @@ def repeating_key_xor(data, key):
 # Language model and text scoring
 
 
-# def lang_histogram_score(text, unigrams):
-#     floor = math.log10(0.01/len(unigrams.keys()))
-#     score = 0
-
-#     for c in text:
-#         if c in unigrams:
-#             score += unigrams[c]
-#         else:
-#             score += floor
-#     return score
-
 def load_ngram_collection(filename):
     return pickle.load(open(filename, 'rb'))
 
