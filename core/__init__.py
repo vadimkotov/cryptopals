@@ -5,17 +5,28 @@ import re
 import string
 import pickle
 
+# Helper function
+def string_to_array(string):
+    return numpy.array(bytearray(string))
+
+
 def hex_string_to_array(string):
-    return numpy.array(bytearray(binascii.unhexlify(string)))
+    #return numpy.array(bytearray(binascii.unhexlify(string)))
+    return string_to_array(binascii.unhexlify(string))
+
 
 def array_to_hex_string(array):
     return binascii.hexlify(bytearray(array))
 
+def hamming_distance(x, y):
+    if len(x) != len(y):
+        return -1
 
-def load_ngram_collection(filename):
-    return pickle.load(open(filename, 'rb'))
+    xored = x ^ y
+    return sum(numpy.unpackbits(xored))
+    
 
-
+# Basic XOR crypto
 def repeating_key_xor(data, key):
 
     xored = []
@@ -23,6 +34,25 @@ def repeating_key_xor(data, key):
     for i in xrange(len(data)):
         xored.append(data[i] ^ key[i%len(key)]) 
     return xored
+
+
+
+# Language model and text scoring
+
+
+def lang_histogram_score(text, unigrams):
+    floor = math.log10(0.01/len(unigrams.keys()))
+    score = 0
+
+    for c in text:
+        if c in unigrams:
+            score += unigrams[c]
+        else:
+            score += floor
+    return score
+
+def load_ngram_collection(filename):
+    return pickle.load(open(filename, 'rb'))
 
 def eng_score(text, ngrams):
     
