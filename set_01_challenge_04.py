@@ -33,7 +33,7 @@ for line in file('files/4.txt'):
     for i in xrange(256):
         potential_cleartext = str(bytearray((ciphertext ^ i)))
 
-        score = eng_score(potential_cleartext, ngrams)
+        score = lang_score(potential_cleartext, ngrams)
 
         if score == 0:
             continue

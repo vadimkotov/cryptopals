@@ -36,19 +36,15 @@ cleartext = ''
 max_score = None
 key = 0
 
-for i in xrange(256):
-    #if i != 0x16:
-    #    continue
-    
+for i in xrange(256): 
+   
     potential_cleartext = str(bytearray((ciphertext ^ i)))
 
-    score = eng_score(potential_cleartext, ngrams)
-
-    #print potential_cleartext, score
+    score = lang_score(potential_cleartext, ngrams)
     
     if score == 0:
         continue
-    # print potential_cleartext, score
+
     if max_score == None:
         max_score = score
     elif score > max_score:

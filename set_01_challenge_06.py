@@ -43,9 +43,7 @@ print hamming_distance(x, y)
 
 
 def get_normalized_edit_distance(key_size, data):
-
     n = 8
-
     d = 0
     
     for i in range(0, key_size*n*2, key_size*2):
@@ -67,7 +65,7 @@ def break_single_xor(block, unigrams):
     for i in xrange(256):
         potential_cleartext = str(bytearray(block ^ i))
 
-        score = lang_histogram_score(potential_cleartext, unigrams)
+        score = lang_score(potential_cleartext, unigrams)
 
         if score == 0:
             continue
